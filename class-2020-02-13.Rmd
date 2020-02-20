@@ -1,0 +1,26 @@
+---
+title: "Class Enrollment"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+library(readxl)
+library(janitor)
+library(tidyverse)
+library(gt)
+enrollment <- read_xlsx("class_enrollment_summary_by_term_2.13.20.xlsx", skip = 3) %>% clean_names() %>% na.omit()
+```
+
+```{r}
+enrollment %>% select(course_title, course_department, total) %>% 
+  gt() %>% 
+  tab_header(
+    title = md("**Enrollment Data**")
+  ) %>% 
+  tab_source_note(
+    source_note = md("Source: [Harvard Enrollment](https://registrar.fas.harvard.edu/files/fas-registrar/files/class_enrollment_summary_by_term_2.13.20.xlsx)")
+  )
+
+```
+
